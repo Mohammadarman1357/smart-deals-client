@@ -1,13 +1,17 @@
 import React, { use, useEffect, useRef, useState } from 'react';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext';
 import Swal from 'sweetalert2';
+import { IoArrowBack } from 'react-icons/io5';
 
 const ProductDetails = () => {
-    const { _id: productId } = useLoaderData();
+    const product = useLoaderData();
+    const { _id: productId } = product;
     const [bids, setBids] = useState([]);
     const bidModalRef = useRef(null);
     const { user } = use(AuthContext);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`http://localhost:3000/products/bids/${productId}`)
@@ -111,68 +115,166 @@ const ProductDetails = () => {
         });
     }
 
+
+    // category
+    // :
+    // "Musical Instruments"
+    // condition
+    // :
+    // "fresh"
+    // created_at
+    // :
+    // "2025-01-31T16:40:00Z"
+    // description
+    // :
+    // "Ibanez S Series electric guitar, brand new, smooth play and excellent tone."
+    // email
+    // :
+    // "seller37@gmail.com"
+    // image
+    // :
+    // "https://i.ibb.co.com/rXGLpVC/pm-main-eg-s-en-sp.png"
+    // location
+    // :
+    // "Comilla"
+    // price_max
+    // :
+    // 55000
+    // price_min
+    // :
+    // 45000
+    // seller_contact
+    // :
+    // "+8801710000037"
+    // seller_image
+    // :
+    // "https://images.unsplash.com/photo-1517841905240-472988babdf9"
+    // seller_name
+    // :
+    // "Shakil Ahmed"
+    // status
+    // :
+    // "pending"
+    // title
+    // :
+    // "Ibanez S Series Electric Guitar"
+    // usage
+    // :
+    // "Unused"
+
+
     return (
         <div>
             {/* product info */}
-            <div>
-                <div>
+            <div className='grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4 md:p-10'>
+                <div className='rounded-2xl col-span-1'>
+                    {/*left side */}
+                    <div className='mb-7'>
+                        <img src={product.image} className='w-full rounded-[8px]' alt="product image" />
+                    </div>
+                    <div className='rounded-[8px] p-6 space-y-6 bg-white'>
+                        <h3 className='font-medium text-2xl'>Product Description</h3>
 
+                        <div className='flex justify-between font-semibold'>
+                            <span><span className='text-primary'>Condition :</span>  {product.condition}</span>
+                            <span><span className='text-primary'>Usage Time :</span>  {product.usage}</span>
+                        </div>
+                        <hr className='border-[#001931]' />
+                        <p className='text-[#969A9D] font-medium'>
+                            {product.description}
+                        </p>
+                    </div>
                 </div>
-                <div>
+                <div className='col-span-2 space-y-6'>
+                    {/*right side */}
+                    <button
+                        onClick={() => navigate(-1)}
+                        className='flex items-center font-medium' >
+                        <IoArrowBack size={18}></IoArrowBack> Back to Products
+                    </button>
+                    <h1 className='font-bold text-4xl'>{product.title}</h1>
+                    <div className="badge badge-soft bg-base-300 badge-primary rounded-full">{product.category}</div>
+                    <div className='bg-white rounded-[8px] p-5'>
+                        <h1 className='text-[#4CAF50] font-bold text-2xl'>{product.price_min} - {product.price_max}</h1>
+                        <p>Price starts from</p>
+                    </div>
+                    <div className='bg-white rounded-[8px] p-5'>
+                        <h1 className='font-bold text-2xl mb-2'>Product Details</h1>
+                        <h4><span className='font-semibold mr-2'>Product ID:</span> {product._id}</h4>
+                        <h4><span className='font-semibold mr-2'>Posted:</span> {product.created_at}</h4>
+                    </div>
+                    <div className='bg-white rounded-[8px] p-5'>
+                        <h1 className='font-bold text-2xl mb-2'>Seller Information</h1>
+                        <div className='flex items-center gap-4 mb-2'>
+                            <img src={product.seller_image} className='rounded-full w-[60px] h-[60px]' alt="seller" />
+                            <span className='flex flex-col'>
+                                <h3 className='font-semibold'>{product.seller_name}</h3>
+                                <p className='text-[#001931]'>{product.email}</p>
+                            </span>
+                        </div>
+                        <h4><span className='font-semibold mr-2'>Location:</span> {product.location}</h4>
+                        <h4><span className='font-semibold mr-2'>Contact:</span> {product.seller_contact}</h4>
+                        <h4><span className='font-semibold mr-2'>Status:</span>
+                            <span className='badge badge-warning rounded-full mr-2'>{product.status}</span>
+                        </h4>
+                    </div>
+
                     <button
                         onClick={handleBidModalOpen}
-                        className="btn btn-primary">
+                        className="btn btn-primary w-full">
                         I want to buy this product
                     </button>
 
-                    {/* modal */}
-                    <dialog ref={bidModalRef} className="modal modal-bottom sm:modal-middle">
-                        <div className="modal-box">
-                            <h3 className="font-bold text-2xl mb-3">Give Seller Your Offered Price!</h3>
-
-                            <form onSubmit={handleBidSubmit}>
-                                <fieldset className="fieldset">
-
-                                    <div className='flex gap-4'>
-                                        <div>
-                                            {/* name */}
-                                            <label className="label mb-2 font-medium text-[#001931] text-[14px]">Buyer Name</label>
-                                            <input type="text" className="input" name='name' defaultValue={user?.displayName} />
-                                        </div>
-                                        <div>
-                                            {/* email */}
-                                            <label className="label mb-2 font-medium text-[#001931] text-[14px]">Buyer Email</label>
-                                            <input type="email" name='email' className="input" defaultValue={user?.email} />
-                                        </div>
-                                    </div>
-
-                                    {/*bid amount */}
-                                    <label className="label mb-2 font-medium text-[#001931] text-[14px]">Your Bid</label>
-                                    <input type="text" className="input w-full" name='bid' placeholder="Your Bid" />
-
-                                    <div className="modal-action">
-                                        {/* if there is a button in form, it will close the modal */}
-                                        <div className='flex gap-4'>
-
-                                            <form method='dialog'>
-                                                <button className="btn btn-outline border-[#632ee3] text-[#632ee3]">Close</button>
-                                            </form>
-
-                                            <button className="btn btn-primary" type='submit'>Submit Bid</button>
-                                        </div>
-                                    </div>
-
-                                </fieldset>
-                            </form>
-
-
-                        </div>
-                    </dialog>
                 </div>
+
+                {/* modal */}
+                <dialog ref={bidModalRef} className="modal modal-bottom sm:modal-middle">
+                    <div className="modal-box">
+                        <h3 className="font-bold text-2xl mb-3">Give Seller Your Offered Price!</h3>
+
+                        <form onSubmit={handleBidSubmit}>
+                            <fieldset className="fieldset">
+
+                                <div className='flex gap-4'>
+                                    <div>
+                                        {/* name */}
+                                        <label className="label mb-2 font-medium text-[#001931] text-[14px]">Buyer Name</label>
+                                        <input type="text" className="input" name='name' defaultValue={user?.displayName} />
+                                    </div>
+                                    <div>
+                                        {/* email */}
+                                        <label className="label mb-2 font-medium text-[#001931] text-[14px]">Buyer Email</label>
+                                        <input type="email" name='email' className="input" defaultValue={user?.email} />
+                                    </div>
+                                </div>
+
+                                {/*bid amount */}
+                                <label className="label mb-2 font-medium text-[#001931] text-[14px]">Your Bid</label>
+                                <input type="text" className="input w-full" name='bid' placeholder="Your Bid" />
+
+                                <div className="modal-action">
+                                    {/* if there is a button in form, it will close the modal */}
+                                    <div className='flex gap-4'>
+
+                                        <form method='dialog'>
+                                            <button className="btn btn-outline border-[#632ee3] text-[#632ee3]">Close</button>
+                                        </form>
+
+                                        <button className="btn btn-primary" type='submit'>Submit Bid</button>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </form>
+
+
+                    </div>
+                </dialog>
+
             </div>
             {/* bids for this product*/}
             <div>
-                <h3 className="text-4xl font-bold"> Bids For This Products:
+                <h3 className="text-4xl font-bold ml-6" > Bids For This Products:
                     <span className='text-primary'> {bids.length}</span>
                 </h3>
 
@@ -190,7 +292,6 @@ const ProductDetails = () => {
                             </tr>
                         </thead>
                         <tbody className='bg-white'>
-                            {/* row 1 */}
                             {
                                 bids.map((bid, index) =>
                                     <tr>
@@ -231,12 +332,11 @@ const ProductDetails = () => {
                                     </tr>
                                 )
                             }
-                            {/* row 2 */}
-
                         </tbody>
 
                     </table>
                 </div>
+
             </div>
         </div>
     );
