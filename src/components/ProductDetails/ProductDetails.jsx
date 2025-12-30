@@ -35,7 +35,11 @@ const ProductDetails = () => {
             body: JSON.stringify(newBid)
         })
             .then(res => res.json())
-            .then(data => console.log('after placing bids', data))
+            .then(data => {
+                if(data.insertedId){
+                    bidModalRef.current.close();
+                }
+            })
 
     }
 
