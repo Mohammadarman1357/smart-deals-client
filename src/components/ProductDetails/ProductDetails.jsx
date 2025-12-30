@@ -134,7 +134,7 @@ const ProductDetails = () => {
                 <div className="overflow-x-auto">
                     <table className="table p-5">
                         {/* head */}
-                        <thead className='bg-base-200'>
+                        <thead className='bg-[#E9E9E9]'>
                             <tr>
                                 <th>SL No.</th>
                                 <th>Buyer Name</th>
