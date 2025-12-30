@@ -16,6 +16,7 @@ const MyBids = () => {
                 })
         }
     }, [user.email]);
+    
 
     const handleDeleteBid = (_id) => {
         Swal.fire({
@@ -44,7 +45,6 @@ const MyBids = () => {
                             // remaining bids
                             const remainingBids = bids.filter(bid => bid._id !== _id);
                             setBids(remainingBids);
-                            
                         }
                     })
             }

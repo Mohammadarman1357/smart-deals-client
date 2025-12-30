@@ -4,6 +4,7 @@ import { Cog, House, MonitorCog } from 'lucide-react';
 import { AuthContext } from '../Context/AuthContext';
 import { FiShoppingBag } from 'react-icons/fi';
 import { BiData } from 'react-icons/bi';
+import Swal from 'sweetalert2';
 
 
 const Navbar = () => {
@@ -13,21 +14,40 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     const handlelogOut = () => {
-        logOut()
-            .then(() => {
-                alert("You are successfully Log out!");
-                navigate(`${location.state ? location.state : '/'}`)
-            })
-            .catch(error => {
-                console.log(error);
-            })
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to logged in!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Logged Out!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Logged Out!",
+                    text: "You have been successfully logged out.",
+                    icon: "success"
+                });
+
+                logOut()
+                    .then(() => {
+                        navigate(`${location.state ? location.state : '/'}`)
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+
+            }
+        });
     }
 
     const links = <>
 
         <Link to={'/'}><li className='ml-2'><button className='focus:border-b-2 focus:border-b-[#632ee3] focus:text-[#632ee3] text-[16px] font-semibold'> <House className='w-5 h-5'></House> Home</button></li></Link>
         <Link to={'/allProducts'}><li className='ml-2'><button className='focus:border-b-2 focus:border-[#632ee3] focus:text-[#632ee3] text-[16px] font-semibold'> <Cog className='w-5 h-5'></Cog> All Products</button></li></Link>
-        
+
         {
             user && <>
                 <Link to={'/myProducts'}><li className='ml-2'><button className='focus:border-b-2 focus:border-[#632ee3] focus:text-[#632ee3] text-[16px] font-semibold'> <FiShoppingBag className='w-5 h-5'></FiShoppingBag> My Products</button></li></Link>

@@ -115,54 +115,6 @@ const ProductDetails = () => {
         });
     }
 
-
-    // category
-    // :
-    // "Musical Instruments"
-    // condition
-    // :
-    // "fresh"
-    // created_at
-    // :
-    // "2025-01-31T16:40:00Z"
-    // description
-    // :
-    // "Ibanez S Series electric guitar, brand new, smooth play and excellent tone."
-    // email
-    // :
-    // "seller37@gmail.com"
-    // image
-    // :
-    // "https://i.ibb.co.com/rXGLpVC/pm-main-eg-s-en-sp.png"
-    // location
-    // :
-    // "Comilla"
-    // price_max
-    // :
-    // 55000
-    // price_min
-    // :
-    // 45000
-    // seller_contact
-    // :
-    // "+8801710000037"
-    // seller_image
-    // :
-    // "https://images.unsplash.com/photo-1517841905240-472988babdf9"
-    // seller_name
-    // :
-    // "Shakil Ahmed"
-    // status
-    // :
-    // "pending"
-    // title
-    // :
-    // "Ibanez S Series Electric Guitar"
-    // usage
-    // :
-    // "Unused"
-
-
     return (
         <div>
             {/* product info */}
@@ -274,7 +226,7 @@ const ProductDetails = () => {
             </div>
             {/* bids for this product*/}
             <div>
-                <h3 className="text-4xl font-bold ml-6" > Bids For This Products:
+                <h3 className="text-4xl font-bold ml-6" > Bids For This Products :
                     <span className='text-primary'> {bids.length}</span>
                 </h3>
 
@@ -299,6 +251,15 @@ const ProductDetails = () => {
                                             {index + 1}
                                         </th>
                                         <td>
+                                            <div className='flex items-center gap-4 mb-2'>
+                                                <img src={product.image} className='rounded-[8px] w-[60px] h-[50px]' alt="seller" />
+                                                <span className='flex flex-col'>
+                                                    <h3 className='font-semibold'>{product.title}</h3>
+                                                    <p className='text-[#001931]'>{product.price_min}</p>
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td>
                                             <div className="flex items-center gap-3">
                                                 <div className="avatar">
                                                     <div className="mask mask-squircle h-12 w-12">
@@ -309,12 +270,9 @@ const ProductDetails = () => {
                                                 </div>
                                                 <div>
                                                     <div className="font-bold">{bid.buyer_name}</div>
-                                                    <div className="text-sm opacity-50">United States</div>
+                                                    <div className="text-sm opacity-50">{product.location}</div>
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td>
-                                            {bid.buyer_email}
                                         </td>
                                         <td>{bid.bid_price}</td>
                                         <td>
