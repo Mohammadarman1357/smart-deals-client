@@ -7,7 +7,7 @@ const latestProductsPromise = fetch('http://localhost:3000/latest-products').the
 
 const Home = () => {
     return (
-        <div className='max-w-7xl mx-auto bg-base-300'>
+        <div>
             <title>Home</title>
             <Banner></Banner>
 
