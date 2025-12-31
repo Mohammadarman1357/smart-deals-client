@@ -1,6 +1,7 @@
 import bgImg from '../assets/bg-hero-left.png';
 import { FaSearch } from 'react-icons/fa';
 import { Search } from 'lucide-react';
+import { Link } from 'react-router';
 
 const Banner = () => {
 
@@ -31,9 +32,9 @@ const Banner = () => {
                         <button className="btn btn-primary join-item rounded-r-full shadow-md"><FaSearch></FaSearch> </button>
                     </div>
 
-                    <div className='mt-5 space-x-4 '>
-                        <button className='btn btn-primary'>Watch All Products</button>
-                        <button className='btn border-primary text-[#632EE3] mt-4 md:mt-0'>Post an Product</button>
+                    <div className='mt-5 space-x-4 md:absolute md:w-full bottom-12 left-1'>
+                        <Link to={'/allProducts/'} className='btn btn-primary'>Watch All Products</Link>
+                        <Link to={'/createAProduct/'} className='btn border-primary text-[#632EE3] mt-4 md:mt-0'>Post an Product</Link>
                     </div>
 
                 </div>

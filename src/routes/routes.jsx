@@ -7,9 +7,9 @@ import Register from "../pages/Register.jsx";
 import ErrorPage from "../pages/ErrorPage.jsx";
 import PrivateRoute from "../provider/PrivateRoute.jsx";
 import AllProducts from "../components/AllProducts.jsx";
-import MyProducts from "../components/MyProducts.jsx";
 import MyBids from "../components/MyBids.jsx";
 import ProductDetails from "../components/ProductDetails/ProductDetails.jsx";
+import CreateAProduct from "../components/CreateAProduct/CreateAProduct.jsx";
 
 const router = createBrowserRouter([
     {
@@ -22,12 +22,9 @@ const router = createBrowserRouter([
             },
             {
                 path: '/allProducts',
-                element: <AllProducts></AllProducts>
-            },
-            {
-                path: '/myProducts',
+                loader: () => fetch('http://localhost:3000/products/'),
                 element: <PrivateRoute>
-                    <MyProducts></MyProducts>
+                    <AllProducts></AllProducts>
                 </PrivateRoute>
             },
             {
@@ -41,6 +38,12 @@ const router = createBrowserRouter([
                 loader: ({ params }) => fetch(`http://localhost:3000/products/${params.id}`),
                 element: <PrivateRoute>
                     <ProductDetails></ProductDetails>
+                </PrivateRoute>
+            },
+            {
+                path: '/createAProduct',
+                element: <PrivateRoute>
+                    <CreateAProduct></CreateAProduct>
                 </PrivateRoute>
             }
         ]

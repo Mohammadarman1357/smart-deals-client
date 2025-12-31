@@ -2,25 +2,34 @@ import React, { use, useEffect, useState } from 'react';
 import { AuthContext } from '../Context/AuthContext';
 import Swal from 'sweetalert2';
 import Footer from './Footer';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const MyBids = () => {
     const { user } = use(AuthContext);
     const [bids, setBids] = useState([]);
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
-        if (user?.email) {
-            fetch(`http://localhost:3000/bids?email=${user.email}`, {
-                headers: {
-                    authorization: `Bearer ${user.accessToken}`
-                }
+        axiosSecure.get(`/bids?email=${user.email}`)
+            .then(data => {
+                setBids(data.data)
             })
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data);
-                    setBids(data);
-                })
-        }
-    }, [user]);
+    }, [user, axiosSecure]);
+
+    // useEffect(() => {
+    //     if (user?.email) {
+    //         fetch(`http://localhost:3000/bids?email=${user.email}`, {
+    //             headers: {
+    //                 authorization: `Bearer ${user.accessToken}`
+    //             }
+    //         })
+    //             .then(res => res.json())
+    //             .then(data => {
+    //                 console.log(data);
+    //                 setBids(data);
+    //             })
+    //     }
+    // }, [user]);
 
 
     const handleDeleteBid = (_id) => {
@@ -77,7 +86,7 @@ const MyBids = () => {
                         {/* row 1 */}
                         {
                             bids.map((bid, index) =>
-                                <tr >
+                                <tr key={bid._id} >
                                     <th>
                                         {index + 1}
                                     </th>

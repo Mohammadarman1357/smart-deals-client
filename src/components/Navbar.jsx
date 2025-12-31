@@ -5,6 +5,7 @@ import { AuthContext } from '../Context/AuthContext';
 import { FiShoppingBag } from 'react-icons/fi';
 import { BiData } from 'react-icons/bi';
 import Swal from 'sweetalert2';
+import { IoCreateOutline } from 'react-icons/io5';
 
 
 const Navbar = () => {
@@ -46,12 +47,12 @@ const Navbar = () => {
     const links = <>
 
         <Link to={'/'}><li className='ml-2'><button className='focus:border-b-2 focus:border-b-[#632ee3] focus:text-[#632ee3] text-[16px] font-semibold'> <House className='w-5 h-5'></House> Home</button></li></Link>
-        <Link to={'/allProducts'}><li className='ml-2'><button className='focus:border-b-2 focus:border-[#632ee3] focus:text-[#632ee3] text-[16px] font-semibold'> <Cog className='w-5 h-5'></Cog> All Products</button></li></Link>
+        <Link to={'/allProducts'}><li className='ml-2'><button className='focus:border-b-2 focus:border-[#632ee3] focus:text-[#632ee3] text-[16px] font-semibold'> <FiShoppingBag className='w-5 h-5'></FiShoppingBag> All Products</button></li></Link>
 
         {
             user && <>
-                <Link to={'/myProducts'}><li className='ml-2'><button className='focus:border-b-2 focus:border-[#632ee3] focus:text-[#632ee3] text-[16px] font-semibold'> <FiShoppingBag className='w-5 h-5'></FiShoppingBag> My Products</button></li></Link>
                 <Link to={'/myBids'}><li className='ml-2'><button className='focus:border-b-2 focus:border-[#632ee3] focus:text-[#632ee3] text-[16px] font-semibold'> <BiData className='w-5 h-5'></BiData> My Bids</button></li></Link>
+                <Link to={'/createAProduct'}><li className='ml-2'><button className='focus:border-b-2 focus:border-[#632ee3] focus:text-[#632ee3] text-[16px] font-semibold'> <IoCreateOutline className='w-5 h-5'></IoCreateOutline> Create Product</button></li></Link>
             </>
         }
     </>
