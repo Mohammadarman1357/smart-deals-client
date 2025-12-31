@@ -3,6 +3,7 @@ import { useLoaderData, useNavigate } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext';
 import Swal from 'sweetalert2';
 import { IoArrowBack } from 'react-icons/io5';
+import Footer from '../Footer';
 
 const ProductDetails = () => {
     const product = useLoaderData();
@@ -14,13 +15,17 @@ const ProductDetails = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:3000/products/bids/${productId}`)
+        fetch(`http://localhost:3000/products/bids/${productId}`, {
+            headers: {
+                authorization: `Bearer ${user.accessToken}`
+            }
+        })
             .then(res => res.json())
             .then(data => {
                 console.log('bids for this product', data);
                 setBids(data);
             })
-    }, [productId])
+    }, [productId, user])
 
     const handleBidModalOpen = () => {
         bidModalRef.current.showModal();
@@ -70,16 +75,16 @@ const ProductDetails = () => {
 
     }
 
-    useEffect(() => {
-        if (user?.email) {
-            fetch(`http://localhost:3000/bids?email=${user.email}`)
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data);
-                    setBids(data);
-                })
-        }
-    }, [user.email]);
+    // useEffect(() => {
+    //     if (user?.email) {
+    //         fetch(`http://localhost:3000/bids?email=${user.email}`)
+    //             .then(res => res.json())
+    //             .then(data => {
+    //                 console.log(data);
+    //                 setBids(data);
+    //             })
+    //     }
+    // }, [user.email]);
 
     const handleDeleteBid = (_id) => {
         Swal.fire({
@@ -208,9 +213,12 @@ const ProductDetails = () => {
                                     {/* if there is a button in form, it will close the modal */}
                                     <div className='flex gap-4'>
 
-                                        <form method='dialog'>
-                                            <button className="btn btn-outline border-[#632ee3] text-[#632ee3]">Close</button>
-                                        </form>
+                                        <button
+                                            className="btn btn-outline border-[#632ee3] text-[#632ee3]"
+                                            type='button'
+                                            onClick={() => bidModalRef.current.close()}>
+                                            Close
+                                        </button>
 
                                         <button className="btn btn-primary" type='submit'>Submit Bid</button>
                                     </div>
@@ -225,7 +233,7 @@ const ProductDetails = () => {
 
             </div>
             {/* bids for this product*/}
-            <div>
+            <div className='p-5'>
                 <h3 className="text-4xl font-bold ml-6" > Bids For This Products :
                     <span className='text-primary'> {bids.length}</span>
                 </h3>
@@ -246,7 +254,7 @@ const ProductDetails = () => {
                         <tbody className='bg-white'>
                             {
                                 bids.map((bid, index) =>
-                                    <tr>
+                                    <tr key={bid._id}>
                                         <th>
                                             {index + 1}
                                         </th>
@@ -296,6 +304,11 @@ const ProductDetails = () => {
                 </div>
 
             </div>
+
+            <footer className='mt-6'>
+                <Footer></Footer>
+            </footer>
+
         </div>
     );
 };

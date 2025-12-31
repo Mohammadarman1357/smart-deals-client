@@ -1,6 +1,7 @@
 import React, { use, useEffect, useState } from 'react';
 import { AuthContext } from '../Context/AuthContext';
 import Swal from 'sweetalert2';
+import Footer from './Footer';
 
 const MyBids = () => {
     const { user } = use(AuthContext);
@@ -8,15 +9,19 @@ const MyBids = () => {
 
     useEffect(() => {
         if (user?.email) {
-            fetch(`http://localhost:3000/bids?email=${user.email}`)
+            fetch(`http://localhost:3000/bids?email=${user.email}`, {
+                headers: {
+                    authorization: `Bearer ${user.accessToken}`
+                }
+            })
                 .then(res => res.json())
                 .then(data => {
                     console.log(data);
                     setBids(data);
                 })
         }
-    }, [user.email]);
-    
+    }, [user]);
+
 
     const handleDeleteBid = (_id) => {
         Swal.fire({
@@ -52,7 +57,7 @@ const MyBids = () => {
     }
 
     return (
-        <div>
+        <div >
             <h3 className='text-4xl font-bold text-center mt-5'>My Bids : <span className='text-primary'>{bids.length}</span></h3>
 
             <div className="overflow-x-auto">
@@ -72,7 +77,7 @@ const MyBids = () => {
                         {/* row 1 */}
                         {
                             bids.map((bid, index) =>
-                                <tr>
+                                <tr >
                                     <th>
                                         {index + 1}
                                     </th>
@@ -109,12 +114,16 @@ const MyBids = () => {
                                     </th>
                                 </tr>)
                         }
-                        {/* row 2 */}
 
                     </tbody>
 
                 </table>
             </div>
+
+            <footer className='mt-6'>
+                <Footer></Footer>
+            </footer>
+
         </div>
     );
 };

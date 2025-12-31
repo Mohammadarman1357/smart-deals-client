@@ -34,7 +34,7 @@ const Footer = () => {
                     <a className="link link-hover">Cookie policy</a>
                 </nav>
                 <nav>
-                    <h6 className="footer-title">Contaacts and Support</h6>
+                    <h6 className="footer-title">Contacts and Support</h6>
                     <a className="link link-hover">support@smartdeals.com</a>
                     <a className="link link-hover">+8801875-903709</a>
                     <a className="link link-hover">Nanupur, Fatickchari, Chattogram</a>
@@ -50,7 +50,7 @@ const Footer = () => {
             </footer>
 
             <hr className='border-[#E5E7EB] my-4' />
-            <p className='text-center text-[#FAFAFA]'>Copyright © 2025 - All right reserved</p>
+            <p className='text-center text-[#FAFAFA]'>Copyright © 2026 - All right reserved</p>
         </div>
     );
 };

@@ -3,6 +3,7 @@ import { Outlet } from 'react-router';
 import Navbar from '../components/Navbar';
 
 const RootLayout = () => {
+    
     return (
         <div className='max-w-7xl mx-auto bg-base-200'>
             

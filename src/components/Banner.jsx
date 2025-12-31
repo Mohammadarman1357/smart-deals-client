@@ -1,8 +1,9 @@
-import React from 'react';
 import bgImg from '../assets/bg-hero-left.png';
 import { FaSearch } from 'react-icons/fa';
+import { Search } from 'lucide-react';
 
 const Banner = () => {
+
     return (
         <div>
 
@@ -20,7 +21,11 @@ const Banner = () => {
                     <div className="join mt-5">
                         <div>
                             <label className="input validator border-none join-item rounded-l-full shadow-md w-50 md:w-100">
-                                <input type="text" placeholder="Search For Products, Categoriees..." required />
+                                <Search></Search>
+                                <input
+                                    type="search"
+                                    placeholder="Search Products..."
+                                />
                             </label>
                         </div>
                         <button className="btn btn-primary join-item rounded-r-full shadow-md"><FaSearch></FaSearch> </button>
